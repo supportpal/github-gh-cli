@@ -4,7 +4,7 @@ This repository provides a Docker image for [GitHub CLI](https://github.com/cli/
 
 ## Container Registry
 
-See [ghcr.io](ghcr.io/supportpal/github-gh-cli)
+See [ghcr.io](https://ghcr.io/supportpal/github-gh-cli)
 
 ## Usage
 
