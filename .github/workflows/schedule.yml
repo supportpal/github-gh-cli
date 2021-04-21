@@ -43,6 +43,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
+          file: ./debian/Dockerfile
           tags: |
             ghcr.io/${{ github.repository }}:${{ env.gh_version }}
             ghcr.io/${{ github.repository }}:latest
