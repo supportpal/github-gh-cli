@@ -20,7 +20,7 @@ jobs:
       - name: Get latest gh version
         run: |
           gh_version="$(curl --silent "https://api.github.com/repos/cli/cli/releases/latest" | grep -Po '"tag_name": "(v)?\K.*?(?=")')"
-          echo "gh_version="${gh_version}" >> $GITHUB_ENV
+          echo "gh_version=${gh_version}" >> $GITHUB_ENV
 
       - name: Update GITHUB_CLI_VERSION
         run: |
