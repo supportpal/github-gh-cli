@@ -16,12 +16,12 @@ RUN set -ex; \
 	rm -rf "$GNUPGHOME"; \
 	apt-key list > /dev/null
 
-ENV GITHUB_CLI_VERSION 1.9.2
+ENV GITHUB_CLI_VERSION 1.9.1
 
 RUN echo "deb https://cli.github.com/packages buster main" > /etc/apt/sources.list.d/github-cli.list
 
 RUN apt-get update; \
-	apt-get install -y gh="${GITHUB_CLI_VERSION1.9.2
+	apt-get install -y gh="${GITHUB_CLI_VERSION}"; \
 	rm -rf /var/lib/apt/lists/* \
 
 CMD ["gh"]
