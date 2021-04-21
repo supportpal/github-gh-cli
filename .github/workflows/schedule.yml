@@ -25,7 +25,7 @@ jobs:
       - name: Update GITHUB_CLI_VERSION
         run: |
           echo "${{ env.gh_version }}" | grep -Eq "^[0-9]+\.[0-9]+\.[0-9]+$"
-          find . -name Dockerfile -print0 | xargs -0 sed -i -E "s/(GITHUB_CLI_VERSION\s*).*$/\1${{ env.gh_version }}/g"
+          find . -name Dockerfile -print0 | xargs -0 sed -i -E "s/^(ENV GITHUB_CLI_VERSION\s*).*$/\1${{ env.gh_version }}/g"
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
