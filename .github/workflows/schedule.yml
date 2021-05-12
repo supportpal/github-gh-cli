@@ -28,7 +28,7 @@ jobs:
           find . -name Dockerfile -print0 | xargs -0 sed -i -E "s/^(ENV GITHUB_CLI_VERSION\s*).*$/\1${{ env.gh_version }}/g"
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v4.11.0
         with:
           commit_message: "Update GITHUB_CLI_VERSION to ${{ env.gh_version }}"
 
