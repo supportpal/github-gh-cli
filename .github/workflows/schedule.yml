@@ -41,7 +41,7 @@ jobs:
 
       - name: Build and Push Docker Image
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2.4.0
         with:
           push: true
           file: ./debian/Dockerfile
