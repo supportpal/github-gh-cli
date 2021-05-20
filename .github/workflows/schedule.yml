@@ -17,10 +17,12 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Get latest gh version
+      - name: Get next gh version
         run: |
-          gh_version="$(curl --silent "https://api.github.com/repos/cli/cli/releases/latest" | grep -Po '"tag_name": "(v)?\K.*?(?=")')"
-          echo "gh_version=${gh_version}" >> $GITHUB_ENV
+          current_version="$(grep -Eo "GITHUB_CLI_VERSION [0-9]+\.[0-9]+\.[0-9]+" debian/Dockerfile | cut -d' ' -f2)"
+          latest_versions="$(curl -sL https://api.github.com/repos/cli/cli/releases | jq -r '.[].tag_name' | tr '\n' ' ')"
+          next_version="$(echo "$latest_versions" | grep -Eo "(.*?)$current_version" | awk '{print $(NF-1)}' | cut -c2-)"
+          echo "gh_version=${next_version}" >> $GITHUB_ENV
 
       - name: Update GITHUB_CLI_VERSION
         run: |
