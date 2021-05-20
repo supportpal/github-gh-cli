@@ -17,7 +17,7 @@ RUN set -ex; \
 	rm -rf "$GNUPGHOME"; \
 	apt-key list > /dev/null
 
-ENV GITHUB_CLI_VERSION 1.10.0-pre.3
+ENV GITHUB_CLI_VERSION 1.10.0
 
 RUN echo "deb https://cli.github.com/packages buster main" > /etc/apt/sources.list.d/github-cli.list
 
