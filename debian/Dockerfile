@@ -17,7 +17,7 @@ RUN set -ex; \
 	rm -rf "$GNUPGHOME"; \
 	apt-key list > /dev/null
 
-ENV GITHUB_CLI_VERSION 1.10.0-pre.3
+ENV GITHUB_CLI_VERSION 1.10.0
 
 RUN set -ex; \
     curl -LsS "https://github.com/cli/cli/releases/download/v${GITHUB_CLI_VERSION}/gh_${GITHUB_CLI_VERSION}_linux_386.deb" -O gh.deb; \
