@@ -5,25 +5,16 @@ RUN set -ex; \
     apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
-        git \
-        gnupg \
-        dirmngr; \
+        git; \
     rm -rf /var/lib/apt/lists/*
-
-RUN set -ex; \
-	key='2CA32056ED206CB81F44A8CAC99B11DEB97541F0'; \
-	export GNUPGHOME="$(mktemp -d)"; \
-	gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key"; \
-	gpg --batch --export "$key" > /etc/apt/trusted.gpg.d/github.gpg; \
-	gpgconf --kill all; \
-	rm -rf "$GNUPGHOME"; \
-	apt-key list > /dev/null
 
 ENV GITHUB_CLI_VERSION 1.10.0
 
 RUN set -ex; \
-    curl -Ls "https://github.com/cli/cli/releases/download/v${GITHUB_CLI_VERSION}/gh_${GITHUB_CLI_VERSION}_linux_amd64.deb" -o gh.deb; \
-	dpkg -i gh.deb; \
-	rm -rf gh.deb \
+    curl -L "https://github.com/cli/cli/releases/download/v${GITHUB_CLI_VERSION}/gh_${GITHUB_CLI_VERSION}_checksums.txt" -o checksums.txt; \
+    curl -OL "https://github.com/cli/cli/releases/download/v${GITHUB_CLI_VERSION}/gh_${GITHUB_CLI_VERSION}_linux_amd64.deb"; \
+    shasum --ignore-missing -a 512 -c checksums.txt; \
+	dpkg -i "gh_${GITHUB_CLI_VERSION}_linux_amd64.deb"; \
+	rm -rf "gh_${GITHUB_CLI_VERSION}_linux_amd64.deb" \
 
 CMD ["gh"]
