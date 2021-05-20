@@ -19,11 +19,9 @@ RUN set -ex; \
 
 ENV GITHUB_CLI_VERSION 1.10.0-pre.3
 
-RUN echo "deb https://cli.github.com/packages buster main" > /etc/apt/sources.list.d/github-cli.list
-
 RUN set -ex; \
-    apt-get update; \
-	apt-get install -y gh="${GITHUB_CLI_VERSION}"; \
-	rm -rf /var/lib/apt/lists/* \
+    curl -LsS "https://github.com/cli/cli/releases/download/v${GITHUB_CLI_VERSION}/gh_${GITHUB_CLI_VERSION}_linux_386.deb" -O gh.deb; \
+	dpkg -i gh.deb; \
+	rm -rf gh.deb \
 
 CMD ["gh"]
