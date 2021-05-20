@@ -21,7 +21,7 @@ jobs:
         run: |
           current_version="$(grep -Eo "ENV GITHUB_CLI_VERSION .+" debian/Dockerfile | cut -d' ' -f3)"
           latest_versions="$(curl -sL https://api.github.com/repos/cli/cli/releases | jq -r '.[].tag_name' | tr '\n' ' ')"
-          next_version="$(echo "$latest_versions" | grep -Eo "(.*?)$current_version" | awk '{print $(NF-1)}' | cut -c2-)"
+          next_version="$(echo "$latest_versions" | grep -Eo "(.*?) v$current_version( |$)" | awk '{print $(NF-1)}' | cut -c2-)"
           echo "gh_version=${next_version}" >> $GITHUB_ENV
 
       - name: Update GITHUB_CLI_VERSION
