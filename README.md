@@ -9,5 +9,5 @@ See [ghcr.io](https://ghcr.io/supportpal/github-gh-cli)
 ## Usage
 
 ```bash
-docker run --rm -it ghcr.io/supportpal/github-gh-cli gh actions
+docker run --rm -it ghcr.io/supportpal/github-gh-cli gh --version
 ```
