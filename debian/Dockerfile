@@ -1,6 +1,7 @@
 FROM debian:buster-slim
 
-RUN apt-get update ; \
+RUN set -ex; \
+    apt-get update ; \
     apt-get install -y --no-install-recommends \
         ca-certificates \
         gnupg \
