@@ -6,10 +6,14 @@ on:
     - cron:  '0 0 * * *' # Midnight - every night
 
 jobs:
-  deploy:
+  get_version:
     runs-on: ubuntu-latest
 
-    name: Update GITHUB_CLI_VERSION
+    name: Get next GITHUB_CLI_VERSION
+
+    # https://stackoverflow.com/a/61236803
+    outputs:
+      gh_version: ${{ steps.gh_version.outputs.gh_version }}
 
     steps:
       - name: Checkout code
@@ -18,6 +22,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Get next gh version
+        id: gh_version
         run: |
           current_version="$(grep -Eo "ENV GITHUB_CLI_VERSION .+" debian/Dockerfile | cut -d' ' -f3)"
           echo "$current_version"
@@ -25,11 +30,26 @@ jobs:
           echo "$latest_versions"
           next_version="$(echo "$latest_versions" | grep -Eo "(.*?) v$current_version( |$)" | awk '{print $(NF-1)}' | cut -c2-)"
           echo "$next_version"
-          echo "gh_version=${next_version}" >> $GITHUB_ENV
+          echo "::set-output name=gh_version::${next_version}"
 
-      - name: Cancel if no new version
-        if: ${{ env.gh_version == '' }}
-        uses: andymckay/cancel-action@0.2
+  update:
+    runs-on: ubuntu-latest
+
+    name: Update GITHUB_CLI_VERSION
+
+    needs: get_version
+
+    if: ${{ needs.get_version.outputs.gh_version != '' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Write gh version to env
+        run: |
+          echo "gh_version=${{needs.get_version.outputs.gh_version}}" >> $GITHUB_ENV
 
       - name: Update GITHUB_CLI_VERSION
         run: |
