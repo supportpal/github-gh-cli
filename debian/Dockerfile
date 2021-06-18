@@ -8,7 +8,7 @@ RUN set -ex; \
         git; \
     rm -rf /var/lib/apt/lists/*
 
-ENV GITHUB_CLI_VERSION 1.11.0
+ENV GITHUB_CLI_VERSION 1.12.0-pre.0
 
 RUN set -ex; \
     curl -L "https://github.com/cli/cli/releases/download/v${GITHUB_CLI_VERSION}/gh_${GITHUB_CLI_VERSION}_checksums.txt" -o checksums.txt; \
