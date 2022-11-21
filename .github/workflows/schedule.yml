@@ -30,7 +30,7 @@ jobs:
           echo "$latest_versions"
           next_version="$(echo "$latest_versions" | grep -Eo "(.*?) v$current_version( |$)" | awk '{print $(NF-1)}' | cut -c2-)"
           echo "$next_version"
-          echo "::set-output name=gh_version::${next_version}"
+          echo "gh_version=${next_version}" >> $GITHUB_OUTPUT
 
   update:
     runs-on: ubuntu-latest
