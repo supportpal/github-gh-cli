@@ -74,7 +74,7 @@ jobs:
 
       - name: Push Docker Image
         if: steps.commit.outputs.changes_detected == 'true'
-        uses: docker/build-push-action@v6.12.0
+        uses: docker/build-push-action@v6.13.0
         with:
           push: true
           context: .
