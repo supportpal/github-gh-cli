@@ -24,11 +24,7 @@ jobs:
       - name: Get next gh version
         id: gh_version
         run: |
-          current_version="$(grep -Eo "ENV GITHUB_CLI_VERSION .+" debian/Dockerfile | cut -d' ' -f3)"
-          echo "$current_version"
-          latest_versions="$(curl -sL https://api.github.com/repos/cli/cli/releases | jq -c '.[] | select(.prerelease == false)' | jq -r '.tag_name' | tr '\n' ' ')"
-          echo "$latest_versions"
-          next_version="$(echo "$latest_versions" | grep -Eo "(.*?) v$current_version( |$)" | awk '{print $(NF-1)}' | cut -c2-)"
+          next_version="$(bash get-version.sh ${{ secrets.GITHUB_TOKEN }})"
           echo "$next_version"
           echo "gh_version=${next_version}" >> $GITHUB_OUTPUT
 
