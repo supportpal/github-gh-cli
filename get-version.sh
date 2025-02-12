@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail  # Ensures the script exits on errors and unset variables
+set -euxo pipefail  # Ensures the script exits on errors and unset variables
 
 # Function to parse JSON data using jq
 parseData() {
@@ -76,6 +76,6 @@ sortedData=$(echo "$data" | jq 'sort_by(.published_at) | reverse')
 
 # Determine the next version.
 tags=$(echo "$sortedData" | jq -r '.[] | .tag_name' | tr '\n' ' ')
-next_version="$(echo "$tags" | grep -Eo "(.*?) v$current_version( |$)" || true | awk '{print $(NF-1)}' | cut -c2-)"
+next_version="$(echo "$tags" | (grep -Eo "(.*?) v$current_version( |$)" || true) | awk '{print $(NF-1)}' | cut -c2-)"
 
 echo "$next_version"
