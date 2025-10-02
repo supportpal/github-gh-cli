@@ -66,7 +66,7 @@ fi
 # Initial URL
 initialUrl="https://api.github.com/repos/cli/cli/releases?per_page=100"
 token="$1"
-current_version="$(grep -Eo "ENV GITHUB_CLI_VERSION .+" debian/Dockerfile | cut -d' ' -f3)"
+current_version="$(grep -Eo "ENV GITHUB_CLI_VERSION=.+" debian/Dockerfile | cut -d'=' -f2)"
 
 # Get the paginated data
 data=$(getPaginatedData "$initialUrl" "$token")
